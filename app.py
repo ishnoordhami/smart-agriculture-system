@@ -65,76 +65,173 @@ def load_models():
 st.markdown("""
 <style>
 
-#MainMenu {
-visibility:hidden;
-}
+/* Hide Streamlit Branding */
+#MainMenu {visibility:hidden;}
+footer {visibility:hidden;}
+header {visibility:hidden;}
 
-footer {
-visibility:hidden;
+/* Main Background */
+.stApp{
+    background: linear-gradient(
+        135deg,
+        #f4fff4 0%,
+        #e8f5e9 50%,
+        #d7f5dd 100%
+    );
 }
-
-header {
-visibility:hidden;
-}
-
-.main {
-background-color:#F4FFF4;
-}
-
+/* Page Width */
 .block-container{
-padding-top:1rem;
-padding-bottom:2rem;
+    padding-top:1rem;
+    padding-bottom:2rem;
+    max-width:1200px;
 }
+
+/* Sidebar */
+[data-testid="stSidebar"]{
+    background: linear-gradient(
+        180deg,
+        #1B5E20,
+        #2E7D32,
+        #43A047
+    );
+}
+
+[data-testid="stSidebar"] *{
+    color:white !important;
+}
+/* Hero Section */
+.hero-card{
+    background: linear-gradient(
+        135deg,
+        #0B6623,
+        #2E8B57,
+        #4CAF50
+    );
+    border-radius:25px;
+    padding:40px;
+    text-align:center;
+    color:white;
+    box-shadow:0 10px 30px rgba(0,0,0,0.25);
+    margin-bottom:20px;
+}
+/* Glass Cards */
+.metric-card{
+    background:rgba(255,255,255,0.75);
+    backdrop-filter:blur(15px);
+    border-radius:20px;
+    padding:25px;
+    text-align:center;
+    border:1px solid rgba(255,255,255,0.4);
+    box-shadow:0 8px 25px rgba(0,0,0,0.12);
+    transition:0.3s;
+}
+
+.metric-card:hover{
+    transform:translateY(-5px);
+}
+
+/* Prediction Cards */
+.prediction-box{
+    background:white;
+    border-radius:20px;
+    padding:25px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.10);
+    border-left:8px solid #2E7D32;
+}
+/* Inputs */
+.stNumberInput,
+.stSelectbox,
+.stTextInput{
+    border-radius:12px;
+}
+
+/* Buttons */
+.stButton > button{
+    width:100%;
+    height:58px;
+    border:none;
+    border-radius:15px;
+    background:linear-gradient(
+        135deg,
+        #1B5E20,
+        #43A047
+    );
+    color:white;
+    font-size:18px;
+    font-weight:700;
+    transition:0.3s;
+    box-shadow:0 6px 15px rgba(0,0,0,0.15);
+}
+.stButton > button:hover{
+    transform:translateY(-2px);
+    background:linear-gradient(
+        135deg,
+        #0B6623,
+        #2E7D32
+    );
+}
+
+/* Success Box */
+.success-card{
+    background:linear-gradient(
+        135deg,
+        #43A047,
+        #66BB6A
+    );
+    color:white;
+    padding:20px;
+    border-radius:18px;
+    text-align:center;
+    font-size:22px;
+    font-weight:bold;
+    box-shadow:0 8px 20px rgba(0,0,0,0.15);
+}
+/* Section Headings */
+h1{
+    color:#1B5E20;
+    font-weight:800;
+}
+
+h2{
+    color:#2E7D32;
+    font-weight:700;
+}
+
+h3{
+    font-weight:600;
+}
+
+/* Radio Buttons */
+div[role="radiogroup"] label{
+    background:rgba(255,255,255,0.12);
+    padding:10px;
+    border-radius:10px;
+    margin-bottom:5px;
+}
+/* Mobile Optimization */
+@media (max-width:768px){
 
 .hero-card{
-background:linear-gradient(
-135deg,
-#1B5E20,
-#4CAF50
-);
-padding:30px;
-border-radius:20px;
-text-align:center;
-color:white;
-box-shadow:0px 6px 20px rgba(0,0,0,0.15);
+padding:25px;
 }
 
 .metric-card{
-background:white;
-padding:20px;
-border-radius:15px;
-box-shadow:0px 4px 10px rgba(0,0,0,0.1);
-text-align:center;
+padding:15px;
+}
+
+h1{
+font-size:30px;
+}
+
+h2{
+font-size:22px;
 }
 
 .stButton > button{
-width:100%;
-height:55px;
-border:none;
-border-radius:12px;
-background:#2E7D32;
-color:white;
-font-size:18px;
-font-weight:bold;
+height:50px;
+font-size:16px;
 }
 
-.stButton > button:hover{
-background:#1B5E20;
-color:white;
-}
-
-.sidebar-title{
-font-size:24px;
-font-weight:bold;
-color:#2E7D32;
-}
-
-.prediction-box{
-background:white;
-padding:20px;
-border-radius:15px;
-text-align:center;
-box-shadow:0px 4px 10px rgba(0,0,0,0.1);
 }
 
 </style>
@@ -253,7 +350,12 @@ elif page == "🌱 Crop Recommendation":
       data = np.array([[ N, P, K, temperature, humidity, ph, rainfall ]])
       prediction = crop_rec_model.predict(data)
       crop_name = crop_encoder.inverse_transform(prediction)
-      st.success( f"🌾 Recommended Crop: {crop_name[0]}" )
+      st.markdown(f"""
+      <div class="success-card">
+      Recommended Crop<br><br>
+      {crop_name[0]}
+      </div>
+      """, unsafe_allow_html=True)
 
 elif page == "🌾 Crop Yield Prediction":
     st.title("🌾 Crop Yield Prediction")
@@ -297,8 +399,13 @@ elif page == "🌾 Crop Yield Prediction":
                                'Pesticide':[pesticide] 
       })
       prediction = crop_yield_model.predict(input_df)
-      st.success( f"🌾 Predicted Yield: {prediction[0]:.2f}" )
-
+      st.markdown(f"""
+      <div class="success-card">
+      <h2>Predicted Yield</h2>
+      <h1>{yield_pred[0]:,.2f}</h1>
+      </div>
+      """, unsafe_allow_html=True)
+        
 elif page == "💰 Crop Price Prediction":
     st.title("💰 Crop Price Prediction")
     state = st.selectbox( "State", list(price_encoders["STATE"].classes_) )
@@ -326,7 +433,12 @@ elif page == "💰 Crop Price Prediction":
                                "Day":[day] 
       })
       prediction = crop_price_model.predict(input_df)
-      st.success( f"💰 Predicted Price: ₹{prediction[0]:,.2f}" )
+      st.markdown(f"""
+      <div class="success-card">
+      <h2>Predicted Crop Price</h2>
+      <h1>₹ {price[0]:,.2f}</h1>
+      </div>
+      """, unsafe_allow_html=True)
 
 elif page == "🩺 Plant Health Prediction":
     st.title("🩺 Plant Health Prediction")
@@ -382,7 +494,12 @@ elif page == "🩺 Plant Health Prediction":
                                            'Hour' ])
       prediction = disease_model.predict(input_df)
       result = disease_encoder.inverse_transform(prediction)
-      st.success( f"🌿 Plant Health Status: {result[0]}" )
+      st.markdown(f"""
+      <div class="success-card">
+      <h2>Plant Health Status</h2>
+      <h1>{status[0]}</h1>
+      </div>
+      """, unsafe_allow_html=True)
 
 elif page == "ℹ️ About":
 
