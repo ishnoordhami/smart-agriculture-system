@@ -142,19 +142,22 @@ header {visibility:hidden;}
     padding:25px;
     text-align:center;
     box-shadow:0 8px 25px rgba(0,0,0,0.12);
+    transition:0.3s;
+    cursor:pointer;
+}
+
+.metric-card:hover{
+    transform:translateY(-5px);
 }
 
 .metric-card h2{
     color:#1B5E20 !important;
-    font-size:24px;
     font-weight:700;
 }
 
 .metric-card h3{
     color:#444 !important;
-    font-size:18px;
 }
-
 .metric-card:hover{
     transform:translateY(-5px);
 }
@@ -266,21 +269,26 @@ font-size:16px;
 </style>
 """, unsafe_allow_html=True)
 
-page = st.radio(
-    "",
+st.sidebar.markdown(
+    "<h2 style='color:white;'>🌾 AgriVision</h2>",
+    unsafe_allow_html=True
+)
+
+st.sidebar.markdown(
+    "AI Powered Smart Agriculture Platform"
+)
+
+page = st.sidebar.radio(
+    "Navigation",
     [
         "🏠 Home",
         "🌱 Crop Recommendation",
         "🌾 Crop Yield Prediction",
         "💰 Crop Price Prediction",
         "🩺 Plant Health Prediction",
-        "🚜 Equipment Sharing",
-        "💧 Irrigation Advisor",
-        "📈 Profit Calculator",
-        "📅 Crop Calendar",
+        "🚜 Equipment Sharing & Rental",
         "ℹ️ About"
-    ],
-    horizontal=True
+    ]
 )
 
 if page == "🏠 Home":
@@ -339,20 +347,46 @@ if page == "🏠 Home":
     st.write("")
     st.write("")
 
+    col5= st.columns(1)
+
+    with col5:
+        st.markdown("""
+        <div class='metric-card'>
+        <h2>🚜 Equipment Sharing</h2>
+        <h3>Rent Farm Machinery</h3>
+        </div>
+        """, unsafe_allow_html=True)
+
     st.subheader("🚀 Features")
     st.markdown("""
-    ✔ Smart Crop Recommendation
+<h2 style="color:#1B5E20;">🚀 Features</h2>
 
-    ✔ Crop Yield Prediction
+<div style="
+background:white;
+padding:20px;
+border-radius:15px;
+box-shadow:0 4px 12px rgba(0,0,0,0.1);
+color:black;
+">
 
-    ✔ Agricultural Market Price Forecasting
+✅ Smart Crop Recommendation<br><br>
 
-    ✔ Plant Health Monitoring
+✅ Crop Yield Prediction<br><br>
 
-    ✔ Mobile Friendly Interface
+✅ Crop Price Prediction<br><br>
 
-    ✔ Machine Learning Powered Insights
-    """)
+✅ Plant Health Prediction<br><br>
+
+✅ Equipment Sharing & Rental<br><br>
+
+✅ Smart Equipment Recommendation<br><br>
+
+✅ Mobile Friendly Interface<br><br>
+
+✅ AI Powered Agricultural Insights
+
+</div>
+""", unsafe_allow_html=True)
 
     st.write("")
     st.info(
@@ -663,6 +697,7 @@ elif page == "ℹ️ About":
     - Crop Yield Prediction
     - Crop Price Prediction
     - Plant Health Prediction
+    - Equipment Sharing & Rental
 
     Developed using:
     - Python
