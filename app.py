@@ -360,7 +360,7 @@ if page == "🏠 Home":
     with col6:
         st.markdown("""
         <div class='metric-card'>
-        <h2>📦 Post-Harvest Storage Advisor</h2>
+        <h2>📦 Post-Harvest Storage</h2>
         <h3>Shelf Life & Spoilage Risk</h3>
         </div>
         """, unsafe_allow_html=True)
