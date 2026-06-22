@@ -266,14 +266,22 @@ font-size:16px;
 </style>
 """, unsafe_allow_html=True)
 
-page = st.navigation([
-    st.Page("home.py", title="🏠 Home"),
-    st.Page("crop.py", title="🌱 Crop Recommendation"),
-    st.Page("yield.py", title="🌾 Yield Prediction"),
-    st.Page("price.py", title="💰 Price Prediction"),
-    st.Page("health.py", title="🩺 Plant Health"),
-    st.Page("equipment.py", title="🚜 Equipment Rental"),
-])
+page = st.radio(
+    "",
+    [
+        "🏠 Home",
+        "🌱 Crop Recommendation",
+        "🌾 Crop Yield Prediction",
+        "💰 Crop Price Prediction",
+        "🩺 Plant Health Prediction",
+        "🚜 Equipment Sharing",
+        "💧 Irrigation Advisor",
+        "📈 Profit Calculator",
+        "📅 Crop Calendar",
+        "ℹ️ About"
+    ],
+    horizontal=True
+)
 
 if page == "🏠 Home":
 
