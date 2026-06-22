@@ -487,33 +487,64 @@ li[role="option"]:hover {
         width: 100% !important;
     }
 }
+
+/* Top Navigation Buttons */
+.stButton > button{
+    background:#2E7D32 !important;
+    color:white !important;
+    border:none !important;
+    border-radius:12px !important;
+    height:55px !important;
+    font-weight:700 !important;
+}
+
+/* Dropdown */
+.stSelectbox div[data-baseweb="select"]{
+    background:white !important;
+    border-radius:12px !important;
+    color:black !important;
+}
+
+/* Dropdown text */
+.stSelectbox *{
+    color:black !important;
+}
 </style>
 """, unsafe_allow_html=True)
 
 st.markdown("""
 <div style="
-background: linear-gradient(135deg,#1B5E20,#43A047);
+background:white;
 padding:15px;
 border-radius:15px;
 margin-bottom:20px;
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
+border:1px solid #e0e0e0;
 ">
 <h1 style="
-color:white;
+color:#1B5E20;
 text-align:center;
 margin:0;
+font-weight:800;
 ">
 🌾 AgriVision
 </h1>
 </div>
 """, unsafe_allow_html=True)
 
-col1, col2, col3 = st.columns([1,1,2])
+col1, col2, col3 = st.columns([1,1,3])
 
 with col1:
-    home_btn = st.button("🏠 Home")
+    home_btn = st.button(
+        "🏠 Home",
+        use_container_width=True
+    )
 
 with col2:
-    about_btn = st.button("ℹ️ About")
+    about_btn = st.button(
+        "ℹ️ About",
+        use_container_width=True
+    )
 
 with col3:
     model = st.selectbox(
@@ -523,7 +554,7 @@ with col3:
             "🌱 Crop Recommendation",
             "🌾 Crop Yield Prediction",
             "💰 Crop Price Prediction",
-            "🩺 Crop Health Prediction",
+            "🩺 Plant Health Prediction",
             "📦 Post-Harvest Storage",
             "🚜 Equipment Sharing & Rental"
         ]
