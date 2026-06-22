@@ -42,6 +42,8 @@ def load_models():
     disease_encoder = pickle.load(
         open("label_encoder_disease.pkl", "rb")
     )
+    storage_classifier = pickle.load(open("spoilage_risk_model.pkl", "rb"))
+    storage_regressor = pickle.load(open("shelf_life_model.pkl", "rb"))
     return (
         crop_rec_model,
         crop_encoder,
@@ -49,7 +51,9 @@ def load_models():
         crop_price_model,
         price_encoders,
         disease_model,
-        disease_encoder
+        disease_encoder,
+        storage_classifier, 
+        storage_regressor 
     )
 
 
@@ -60,7 +64,9 @@ def load_models():
     crop_price_model,
     price_encoders,
     disease_model,
-    disease_encoder
+    disease_encoder,
+    storage_classifier, 
+    storage_regressor
 ) = load_models()
 
 conn = sqlite3.connect(
@@ -857,6 +863,249 @@ elif page == "🩺 Crop Health Prediction":
       <h1>{result[0]}</h1>
       </div>
       """, unsafe_allow_html=True)
+
+elif page == "📦 Post-Harvest Storage":
+    st.title("📦 Post-Harvest Storage Advisor")
+    st.write("Predict spoilage risk and shelf life based on storage conditions.")
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("Storage Conditions")
+        temperature = st.number_input(
+            "Storage Temperature (°C)", 
+            min_value=-5.0, 
+            max_value=40.0, 
+            value=15.0,
+            step=0.1,
+            help="Ideal temperature varies by crop"
+        )
+        
+        humidity = st.number_input(
+            "Humidity (%)", 
+            min_value=30.0, 
+            max_value=100.0, 
+            value=65.0,
+            step=0.1,
+            help="Optimal humidity depends on crop type"
+        )
+    
+    with col2:
+        st.markdown("Crop Information")
+        
+        # All crop types from your dataset
+        crop_options = [
+            'Apple', 'Banana', 'Chickpea', 'Groundnut', 'Maize', 
+            'Mango', 'Onion', 'Potato', 'Rice', 'Soybean', 
+            'Tomato', 'Wheat'
+        ]
+        
+        crop = st.selectbox(
+            "Select Crop Type",
+            crop_options,
+            help="Different crops have different storage requirements"
+        )
+        
+        crop_recommendations = {
+            'Apple': {'ideal_temp': '0-4°C', 'ideal_humidity': '90-95%'},
+            'Banana': {'ideal_temp': '13-15°C', 'ideal_humidity': '85-95%'},
+            'Chickpea': {'ideal_temp': '10-15°C', 'ideal_humidity': '40-50%'},
+            'Groundnut': {'ideal_temp': '10-15°C', 'ideal_humidity': '50-60%'},
+            'Maize': {'ideal_temp': '10-15°C', 'ideal_humidity': '50-60%'},
+            'Mango': {'ideal_temp': '10-13°C', 'ideal_humidity': '85-95%'},
+            'Onion': {'ideal_temp': '0-4°C', 'ideal_humidity': '60-70%'},
+            'Potato': {'ideal_temp': '4-8°C', 'ideal_humidity': '85-95%'},
+            'Rice': {'ideal_temp': '10-15°C', 'ideal_humidity': '50-60%'},
+            'Soybean': {'ideal_temp': '10-15°C', 'ideal_humidity': '50-60%'},
+            'Tomato': {'ideal_temp': '12-15°C', 'ideal_humidity': '85-95%'},
+            'Wheat': {'ideal_temp': '10-15°C', 'ideal_humidity': '50-60%'}
+        }
+        
+        if crop in crop_recommendations:
+            rec = crop_recommendations[crop]
+            st.info(f"""
+            💡 **Storage Recommendations for {crop}:**
+            - Ideal Temperature: {rec['ideal_temp']}
+            - Ideal Humidity: {rec['ideal_humidity']}
+            """)
+    
+    # Predict button
+    if st.button("📊 Predict Storage Outcome", use_container_width=True):
+        # Create input dataframe
+        input_data = pd.DataFrame({
+            'Storage temperature': [temperature],
+            'Humidity': [humidity],
+            'Crop type': [crop]
+        })
+        
+        try:
+            # Make predictions
+            spoilage_pred = storage_classifier.predict(input_data)[0]
+            shelf_life_pred = storage_regressor.predict(input_data)[0]
+            
+            # Get probabilities for spoilage risk
+            spoilage_proba = storage_classifier.predict_proba(input_data)[0]
+            
+            # Display results
+            col1, col2, col3 = st.columns(3)
+            
+            with col1:
+                # Spoilage Risk
+                if spoilage_pred == 'Low':
+                    emoji = "🟢"
+                    color = "#4CAF50"
+                elif spoilage_pred == 'Medium':
+                    emoji = "🟡"
+                    color = "#FFC107"
+                else:
+                    emoji = "🔴"
+                    color = "#F44336"
+                
+                st.markdown(f"""
+                <div style="
+                    background: white;
+                    padding: 20px;
+                    border-radius: 15px;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+                    text-align: center;
+                    border-left: 6px solid {color};
+                ">
+                    <h3 style="color: #1B5E20;">{emoji} Spoilage Risk</h3>
+                    <h1 style="color: {color}; font-size: 32px;">{spoilage_pred}</h1>
+                </div>
+                """, unsafe_allow_html=True)
+            
+            with col2:
+                # Shelf Life
+                st.markdown(f"""
+                <div style="
+                    background: white;
+                    padding: 20px;
+                    border-radius: 15px;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+                    text-align: center;
+                    border-left: 6px solid #2196F3;
+                ">
+                    <h3 style="color: #1B5E20;">📅 Shelf Life</h3>
+                    <h1 style="color: #2196F3; font-size: 32px;">{shelf_life_pred:.1f}</h1>
+                    <p style="color: #666;">days</p>
+                </div>
+                """, unsafe_allow_html=True)
+            
+            with col3:
+                # Risk Level Indicator
+                if spoilage_pred == 'Low':
+                    risk_level = "✅ Safe for Storage"
+                    bg_color = "#E8F5E9"
+                elif spoilage_pred == 'Medium':
+                    risk_level = "⚠️ Monitor Closely"
+                    bg_color = "#FFF3E0"
+                else:
+                    risk_level = "❌ High Risk - Immediate Action Needed"
+                    bg_color = "#FFEBEE"
+                
+                st.markdown(f"""
+                <div style="
+                    background: {bg_color};
+                    padding: 20px;
+                    border-radius: 15px;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+                    text-align: center;
+                ">
+                    <h3 style="color: #1B5E20;">📊 Risk Status</h3>
+                    <p style="font-size: 16px; font-weight: 600; color: #333;">{risk_level}</p>
+                </div>
+                """, unsafe_allow_html=True)
+            
+            # Detailed Analysis
+            with st.expander("📈 Detailed Analysis", expanded=True):
+                st.markdown("### Probability Distribution")
+                
+                # Create a simple bar chart for probabilities
+                proba_df = pd.DataFrame({
+                    'Risk Level': storage_classifier.classes_,
+                    'Probability': spoilage_proba * 100
+                })
+                
+                # Display as a bar chart
+                st.bar_chart(proba_df.set_index('Risk Level'))
+                
+                # Additional storage recommendations
+                st.markdown("### 💡 Storage Recommendations")
+                
+                if spoilage_pred == 'High':
+                    st.error("""
+                    ⚠️ **High Spoilage Risk Detected!**
+                    
+                    **Recommended Actions:**
+                    - Reduce temperature immediately
+                    - Check for proper ventilation
+                    - Inspect for signs of spoilage
+                    - Consider early sale/processing
+                    """)
+                elif spoilage_pred == 'Medium':
+                    st.warning("""
+                    ⚠️ **Moderate Spoilage Risk**
+                    
+                    **Recommended Actions:**
+                    - Monitor temperature and humidity regularly
+                    - Ensure proper air circulation
+                    - Check for pest infestation
+                    - Plan for timely sale
+                    """)
+                else:
+                    st.success("""
+                    ✅ **Low Spoilage Risk - Good Storage Conditions**
+                    
+                    **To Maintain:**
+                    - Continue current storage practices
+                    - Regular monitoring recommended
+                    - Maintain optimal conditions
+                    - Document storage practices for future reference
+                    """)
+                
+                # Shelf life interpretation
+                if shelf_life_pred < 30:
+                    st.info(f"📌 **Short shelf life ({shelf_life_pred:.1f} days)**: Plan for quick sale or processing.")
+                elif shelf_life_pred < 90:
+                    st.info(f"📌 **Medium shelf life ({shelf_life_pred:.1f} days)**: Regular monitoring and rotation recommended.")
+                else:
+                    st.info(f"📌 **Long shelf life ({shelf_life_pred:.1f} days)**: Suitable for extended storage.")
+            
+            # Storage Tips based on crop
+            with st.expander("🌱 Storage Tips for " + crop):
+                storage_tips = {
+                    'Apple': """
+                    - Store at 0-4°C with 90-95% humidity
+                    - Avoid storing with potatoes (ethylene gas)
+                    - Check regularly for rot and bruising
+                    """,
+                    'Banana': """
+                    - Store at 13-15°C with 85-95% humidity
+                    - Avoid refrigeration before ripening
+                    - Handle gently to prevent bruising
+                    """,
+                    'Rice': """
+                    - Store at 10-15°C with 50-60% humidity
+                    - Keep in airtight containers
+                    - Protect from pests and moisture
+                    """,
+                    'Wheat': """
+                    - Store at 10-15°C with 50-60% humidity
+                    - Ensure proper ventilation
+                    - Monitor for pest infestation
+                    """,
+                    # Add more crops as needed
+                }
+                
+                if crop in storage_tips:
+                    st.markdown(storage_tips[crop])
+                else:
+                    st.info("General storage tips: Maintain recommended temperature and humidity levels, ensure proper ventilation, and monitor regularly for signs of spoilage.")
+                    
+        except Exception as e:
+            st.error(f"⚠️ Error making prediction: {str(e)}")
+            st.info("Please ensure all inputs are valid and try again.")
 
 elif page == "🚜 Equipment Sharing & Rental":
 
