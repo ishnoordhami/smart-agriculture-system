@@ -490,32 +490,57 @@ li[role="option"]:hover {
 </style>
 """, unsafe_allow_html=True)
 
-st.sidebar.markdown(
-    """
-    <div class="sidebar-logo">
-        🌾 AgriVision
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+st.markdown("""
+<div style="
+background: linear-gradient(135deg,#1B5E20,#43A047);
+padding:15px;
+border-radius:15px;
+margin-bottom:20px;
+">
+<h1 style="
+color:white;
+text-align:center;
+margin:0;
+">
+🌾 AgriVision
+</h1>
+</div>
+""", unsafe_allow_html=True)
 
-st.sidebar.markdown(
-    "AI Powered Smart Agriculture Platform"
-)
+col1, col2, col3 = st.columns([1,1,2])
 
-page = st.sidebar.radio(
-    "Navigation",
-    [
-        "🏠 Home",
-        "🌱 Crop Recommendation",
-        "🌾 Crop Yield Prediction",
-        "💰 Crop Price Prediction",
-        "🩺 Plant Health Prediction",
-        "📦 Post-Harvest Storage",
-        "🚜 Equipment Sharing & Rental",
-        "ℹ️ About"
-    ]
-)
+with col1:
+    home_btn = st.button("🏠 Home")
+
+with col2:
+    about_btn = st.button("ℹ️ About")
+
+with col3:
+    model = st.selectbox(
+        "Models",
+        [
+            "Select Feature",
+            "🌱 Crop Recommendation",
+            "🌾 Crop Yield Prediction",
+            "💰 Crop Price Prediction",
+            "🩺 Crop Health Prediction",
+            "📦 Post-Harvest Storage",
+            "🚜 Equipment Sharing & Rental"
+        ]
+    )
+if "page" not in st.session_state:
+    st.session_state.page = "🏠 Home"
+
+if home_btn:
+    st.session_state.page = "🏠 Home"
+
+if about_btn:
+    st.session_state.page = "ℹ️ About"
+
+if model != "Select Feature":
+    st.session_state.page = model
+
+page = st.session_state.page
 
 if page == "🏠 Home":
 
@@ -544,7 +569,7 @@ if page == "🏠 Home":
     with col2:
         st.markdown("""
         <div class='metric-card'>
-        <h2>🩺 Plant Health</h2>
+        <h2>🩺 Crop Health</h2>
         <h3>99% Accuracy</h3>
         </div>
         """, unsafe_allow_html=True)
@@ -603,7 +628,7 @@ if page == "🏠 Home":
     ✅ Smart Crop Recommendation<br><br>
     ✅ Crop Yield Prediction<br><br>
     ✅ Crop Price Prediction<br><br>
-    ✅ Plant Health Prediction<br><br>
+    ✅ Crop Health Prediction<br><br>
     ✅ Equipment Sharing & Rental<br><br>
     ✅ Post-Harvest Storage Advisor<br><br>
     ✅ Mobile Friendly Interface<br><br>
@@ -720,8 +745,8 @@ elif page == "💰 Crop Price Prediction":
       </div>
       """, unsafe_allow_html=True)
 
-elif page == "🩺 Plant Health Prediction":
-    st.title("🩺 Plant Health Prediction")
+elif page == "🩺 Crop Health Prediction":
+    st.title("🩺 Crop Health Prediction")
     col1, col2 = st.columns(2)
     with col1:
       Soil_Moisture = st.number_input("Soil Moisture")
@@ -741,7 +766,7 @@ elif page == "🩺 Plant Health Prediction":
       Month = st.number_input("Month", value=current.month)
       Day = st.number_input("Day", value=current.day) 
       Hour = st.number_input("Hour", value=current.hour)
-    if st.button("🩺 Predict Plant Health"):
+    if st.button("🩺 Predict Crop Health"):
       input_df = pd.DataFrame([[ Soil_Moisture,
                                 Ambient_Temperature,
                                 Soil_Temperature, 
@@ -918,7 +943,7 @@ elif page == "ℹ️ About":
     - Crop Recommendation
     - Crop Yield Prediction
     - Crop Price Prediction
-    - Plant Health Prediction
+    - Crop Health Prediction
     - Equipment Sharing & Rental
 
     Developed using:
