@@ -426,7 +426,7 @@ if page == "🏠 Home":
     st.markdown("""
     <div class='hero-card'>
     <h1>🌾 AgriVision</h1>
-    <h3>AI Powered Smart Agriculture Platform</h3>
+    <h3>Smart Agriculture Analytics Platform</h3>
     <p>
     Predict crops, estimate yields,
     forecast market prices and monitor
