@@ -4,7 +4,6 @@ import numpy as np
 import pickle
 from datetime import datetime
 import sqlite3
-st.sidebar.write("Sidebar Test")
 
 st.set_page_config(
     page_title="AgriVision",
@@ -12,7 +11,6 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
-st.sidebar.title("TEST SIDEBAR")
 
 @st.cache_resource
 def load_models():
@@ -119,7 +117,7 @@ header {visibility:hidden;}
     );
 }
 
-[data-testid="stSidebar"] *{
+[data-testid="stSidebar"] {
     color:white !important;
 }
 /* Hero Section */
@@ -267,7 +265,91 @@ font-size:16px;
 }
 
 }
+/* ===== FIX LABELS & HEADINGS ===== */
 
+h1, h2, h3, h4, h5, h6,
+label,
+p,
+span,
+div {
+    color: #1B1B1B !important;
+}
+
+/* Page Titles */
+.stTitle,
+[data-testid="stMarkdownContainer"] h1 {
+    color: #1B5E20 !important;
+    font-weight: 800 !important;
+}
+
+/* Input Labels */
+.stNumberInput label,
+.stSelectbox label,
+.stTextInput label,
+.stDateInput label {
+    color: #1B1B1B !important;
+    font-weight: 600 !important;
+}
+
+/* ===== WHITE INPUT BOXES ===== */
+
+.stNumberInput input,
+.stTextInput input {
+    background-color: white !important;
+    color: black !important;
+    border: 2px solid #dfe6e9 !important;
+    border-radius: 10px !important;
+}
+
+/* Selectboxes */
+.stSelectbox div[data-baseweb="select"] {
+    background-color: white !important;
+    color: black !important;
+    border-radius: 10px !important;
+}
+
+/* Dropdown text */
+.stSelectbox * {
+    color: black !important;
+}
+
+/* Number Input +/- buttons */
+button[kind="secondary"] {
+    background-color: white !important;
+    color: black !important;
+}
+
+/* Input containers */
+[data-testid="stNumberInput"] {
+    background: white !important;
+    border-radius: 12px !important;
+    padding: 5px !important;
+}
+
+/* ===== PREDICTION PAGE HEADINGS ===== */
+
+.stMarkdown h1,
+.stMarkdown h2,
+.stMarkdown h3 {
+    color: #1B5E20 !important;
+}
+
+/* ===== SUCCESS CARDS ===== */
+
+.success-card h1,
+.success-card h2,
+.success-card h3,
+.success-card {
+    color: white !important;
+}
+
+/* ===== SIDEBAR ===== */
+
+[data-testid="stSidebar"] label,
+[data-testid="stSidebar"] span,
+[data-testid="stSidebar"] p {
+    color: white !important;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -288,6 +370,7 @@ page = st.sidebar.radio(
         "🌾 Crop Yield Prediction",
         "💰 Crop Price Prediction",
         "🩺 Plant Health Prediction",
+        "📦 Post-Harvest Storage",
         "🚜 Equipment Sharing & Rental",
         "ℹ️ About"
     ]
