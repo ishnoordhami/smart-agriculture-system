@@ -572,7 +572,7 @@ with col3:
             "🌱 Crop Recommendation",
             "🌾 Crop Yield Prediction",
             "💰 Crop Price Prediction",
-            "🩺 Plant Health Prediction",
+            "🩺 Crop Health Prediction",
             "📦 Post-Harvest Storage",
             "🚜 Equipment Sharing & Rental"
         ]
