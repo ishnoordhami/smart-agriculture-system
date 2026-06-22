@@ -137,14 +137,22 @@ header {visibility:hidden;}
 }
 /* Glass Cards */
 .metric-card{
-    background:rgba(255,255,255,0.75);
-    backdrop-filter:blur(15px);
+    background:white;
     border-radius:20px;
     padding:25px;
     text-align:center;
-    border:1px solid rgba(255,255,255,0.4);
     box-shadow:0 8px 25px rgba(0,0,0,0.12);
-    transition:0.3s;
+}
+
+.metric-card h2{
+    color:#1B5E20 !important;
+    font-size:24px;
+    font-weight:700;
+}
+
+.metric-card h3{
+    color:#444 !important;
+    font-size:18px;
 }
 
 .metric-card:hover{
@@ -258,27 +266,14 @@ font-size:16px;
 </style>
 """, unsafe_allow_html=True)
 
-st.sidebar.markdown(
-    "<h2 style='color:#2E7D32;'>🌾 AgriVision</h2>",
-    unsafe_allow_html=True
-)
-
-st.sidebar.markdown(
-    "AI Powered Smart Agriculture Platform"
-)
-
-page = st.sidebar.radio(
-    "Navigation",
-    [
-        "🏠 Home",
-        "🌱 Crop Recommendation",
-        "🌾 Crop Yield Prediction",
-        "💰 Crop Price Prediction",
-        "🩺 Plant Health Prediction",
-        "🚜 Equipment Sharing",
-        "ℹ️ About"
-    ]
-)
+page = st.navigation([
+    st.Page("home.py", title="🏠 Home"),
+    st.Page("crop.py", title="🌱 Crop Recommendation"),
+    st.Page("yield.py", title="🌾 Yield Prediction"),
+    st.Page("price.py", title="💰 Price Prediction"),
+    st.Page("health.py", title="🩺 Plant Health"),
+    st.Page("equipment.py", title="🚜 Equipment Rental"),
+])
 
 if page == "🏠 Home":
 
@@ -405,7 +400,6 @@ elif page == "🌾 Crop Yield Prediction":
                                     'Uttarakhand','West Bengal'] )
     crop_year = st.number_input("Crop Year", value=2024)
     area = st.number_input("Area")
-    production = st.number_input("Production")
     rainfall = st.number_input("Annual Rainfall")
     fertilizer = st.number_input("Fertilizer") 
     pesticide = st.number_input("Pesticide")
