@@ -582,12 +582,15 @@ if "page" not in st.session_state:
 
 if home_btn:
     st.session_state.page = "🏠 Home"
+    st.rerun()
 
 if about_btn:
     st.session_state.page = "ℹ️ About"
+    st.rerun()
 
 if model != "Select Feature":
     st.session_state.page = model
+    st.rerun()
 
 page = st.session_state.page
 
