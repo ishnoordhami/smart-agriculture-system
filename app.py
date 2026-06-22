@@ -12,10 +12,10 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-@st.cache_resource
-def load_models():
+# ================= LAZY LOADING FUNCTIONS =================
+# Each model loads only when its page is accessed
 
-    @st.cache_resource
+@st.cache_resource
 def load_crop_rec_model():
     return pickle.load(open("crop_recommendation_model.pkl", "rb"))
 
@@ -50,30 +50,6 @@ def load_storage_classifier():
 @st.cache_resource
 def load_storage_regressor():
     return pickle.load(open("shelf_life_model.pkl", "rb"))
-    return (
-        crop_rec_model,
-        crop_encoder,
-        crop_yield_model,
-        crop_price_model,
-        price_encoders,
-        disease_model,
-        disease_encoder,
-        storage_classifier, 
-        storage_regressor 
-    )
-
-
-(
-    crop_rec_model,
-    crop_encoder,
-    crop_yield_model,
-    crop_price_model,
-    price_encoders,
-    disease_model,
-    disease_encoder,
-    storage_classifier, 
-    storage_regressor
-) = load_models()
 
 conn = sqlite3.connect(
     "equipment.db",
