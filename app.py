@@ -347,15 +347,23 @@ if page == "🏠 Home":
     st.write("")
     st.write("")
 
-    col5= st.columns(1)
+    col5, col6 = st.columns(2)
 
-    with col5:
-        st.markdown("""
-        <div class='metric-card'>
-        <h2>🚜 Equipment Sharing</h2>
-        <h3>Rent Farm Machinery</h3>
-        </div>
-        """, unsafe_allow_html=True)
+with col5:
+    st.markdown("""
+    <div class='metric-card'>
+    <h2>🚜 Equipment Sharing</h2>
+    <h3>Rent Farm Machinery</h3>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col6:
+    st.markdown("""
+    <div class='metric-card'>
+    <h2>📦 Post-Harvest Storage Advisor</h2>
+    <h3>Shelf Life & Spoilage Risk</h3>
+    </div>
+    """, unsafe_allow_html=True)
 
     st.subheader("🚀 Features")
     st.markdown("""
@@ -379,7 +387,7 @@ color:black;
 
 ✅ Equipment Sharing & Rental<br><br>
 
-✅ Smart Equipment Recommendation<br><br>
+✅ Post-Harvest Storage Advisor<br><br>
 
 ✅ Mobile Friendly Interface<br><br>
 
