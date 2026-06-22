@@ -359,7 +359,42 @@ button[kind="secondary"] {
 [data-testid="stSidebar"] p {
     color: white !important;
 }
+/* ===== SELECTBOX FIX ===== */
 
+/* Main dropdown box */
+div[data-baseweb="select"] > div {
+    background-color: white !important;
+    color: black !important;
+    border: 2px solid #dfe6e9 !important;
+    border-radius: 10px !important;
+}
+
+/* Selected value */
+div[data-baseweb="select"] span {
+    color: black !important;
+}
+
+/* Dropdown arrow */
+div[data-baseweb="select"] svg {
+    fill: black !important;
+}
+
+/* Dropdown menu */
+ul[role="listbox"] {
+    background-color: white !important;
+}
+
+/* Dropdown options */
+li[role="option"] {
+    color: black !important;
+    background-color: white !important;
+}
+
+/* Hover effect */
+li[role="option"]:hover {
+    background-color: #e8f5e9 !important;
+    color: black !important;
+}
 </style>
 """, unsafe_allow_html=True)
 
