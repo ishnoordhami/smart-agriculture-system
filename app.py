@@ -395,11 +395,22 @@ li[role="option"]:hover {
     background-color: #e8f5e9 !important;
     color: black !important;
 }
+.sidebar-logo{
+    color:white !important;
+    font-size:32px;
+    font-weight:800;
+    text-align:center;
+    margin-bottom:20px;
+}
 </style>
 """, unsafe_allow_html=True)
 
 st.sidebar.markdown(
-    "<h2 style='color:white !important;'>🌾 AgriVision</h2>",
+    """
+    <div class="sidebar-logo">
+        🌾 AgriVision
+    </div>
+    """,
     unsafe_allow_html=True
 )
 
