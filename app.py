@@ -32,56 +32,41 @@ st.set_page_config(
 )
 
 @st.cache_resource
-def load_models():
-    crop_rec_model = pickle.load(
-        open("crop_recommendation_model.pkl", "rb")
-    )
-    crop_encoder = pickle.load(
-        open("label_encoder.pkl", "rb")
-    )
+def load_crop_rec_model():
+    return pickle.load(open("crop_recommendation_model.pkl", "rb"))
 
-    crop_yield_model = pickle.load(
-        open("crop_yield_model.pkl", "rb")
-    )
+@st.cache_resource
+def load_crop_encoder():
+    return pickle.load(open("label_encoder.pkl", "rb"))
 
-    crop_price_model = pickle.load(
-        open("crop_price_model.pkl", "rb")
-    )
+@st.cache_resource
+def load_crop_yield_model():
+    return pickle.load(open("crop_yield_model.pkl", "rb"))
 
-    price_encoders = pickle.load(
-        open("label_encoder_price.pkl", "rb")
-    )
-    disease_model = pickle.load(
-        open("crop_disease_model.pkl", "rb")
-    )
+@st.cache_resource
+def load_crop_price_model():
+    return pickle.load(open("crop_price_model.pkl", "rb"))
 
-    disease_encoder = pickle.load(
-        open("label_encoder_disease.pkl", "rb")
-    )
-    storage_classifier = pickle.load(open("spoilage_risk_model.pkl", "rb"))
-    storage_regressor = pickle.load(open("shelf_life_model.pkl", "rb"))
-    return (
-        crop_rec_model,
-        crop_encoder,
-        crop_yield_model,
-        crop_price_model,
-        price_encoders,
-        disease_model,
-        disease_encoder,
-        storage_classifier, 
-        storage_regressor 
-    )
-    (
-    crop_rec_model,
-    crop_encoder,
-    crop_yield_model,
-    crop_price_model,
-    price_encoders,
-    disease_model,
-    disease_encoder,
-    storage_classifier, 
-    storage_regressor
-) = load_models()
+@st.cache_resource
+def load_price_encoders():
+    return pickle.load(open("label_encoder_price.pkl", "rb"))
+
+@st.cache_resource
+def load_disease_model():
+    return pickle.load(open("crop_disease_model.pkl", "rb"))
+
+@st.cache_resource
+def load_disease_encoder():
+    return pickle.load(open("label_encoder_disease.pkl", "rb"))
+
+@st.cache_resource
+def load_storage_classifier():
+    return pickle.load(open("spoilage_risk_model.pkl", "rb"))
+
+@st.cache_resource
+def load_storage_regressor():
+    return pickle.load(open("shelf_life_model.pkl", "rb"))
+    
 
 conn = sqlite3.connect(
     "equipment.db",
