@@ -350,6 +350,13 @@ button[kind="secondary"] {
 [data-testid="stSidebar"] p {
     color: white !important;
 }
+/* Hero Card Text */
+.hero-card h1,
+.hero-card h2,
+.hero-card h3,
+.hero-card p {
+    color: white !important;
+}
 </style>
 """, unsafe_allow_html=True)
 
