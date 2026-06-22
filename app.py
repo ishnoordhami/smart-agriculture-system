@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import pickle
 from datetime import datetime
+import sqlite3
 
 st.set_page_config(
     page_title="AgriVision",
@@ -61,6 +62,26 @@ def load_models():
     disease_model,
     disease_encoder
 ) = load_models()
+
+conn = sqlite3.connect(
+    "equipment.db",
+    check_same_thread=False
+)
+
+c = conn.cursor()
+
+c.execute("""
+CREATE TABLE IF NOT EXISTS equipment(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    owner_name TEXT,
+    location TEXT,
+    equipment_type TEXT,
+    rent_per_day REAL,
+    contact TEXT
+)
+""")
+
+conn.commit()
 
 st.markdown("""
 <style>
@@ -254,6 +275,7 @@ page = st.sidebar.radio(
         "🌾 Crop Yield Prediction",
         "💰 Crop Price Prediction",
         "🩺 Plant Health Prediction",
+        "🚜 Equipment Sharing",
         "ℹ️ About"
     ]
 )
@@ -402,7 +424,7 @@ elif page == "🌾 Crop Yield Prediction":
       st.markdown(f"""
       <div class="success-card">
       <h2>Predicted Yield</h2>
-      <h1>{yield_pred[0]:,.2f}</h1>
+      <h1>{prediction[0]:,.2f}</h1>
       </div>
       """, unsafe_allow_html=True)
         
@@ -436,7 +458,7 @@ elif page == "💰 Crop Price Prediction":
       st.markdown(f"""
       <div class="success-card">
       <h2>Predicted Crop Price</h2>
-      <h1>₹ {price[0]:,.2f}</h1>
+      <h1>₹ {prediction[0]:,.2f}</h1>
       </div>
       """, unsafe_allow_html=True)
 
@@ -497,9 +519,145 @@ elif page == "🩺 Plant Health Prediction":
       st.markdown(f"""
       <div class="success-card">
       <h2>Plant Health Status</h2>
-      <h1>{status[0]}</h1>
+      <h1>{result[0]}</h1>
       </div>
       """, unsafe_allow_html=True)
+
+elif page == "🚜 Equipment Sharing":
+    st.title("🚜 Equipment Sharing & Rental")
+
+    menu = st.radio(
+        "Select Option",
+        [
+            "List Equipment",
+            "Search Equipment",
+            "Equipment Recommendation"
+        ]
+    )
+    if menu == "List Equipment":
+
+        owner = st.text_input("Owner Name")
+
+        location = st.text_input(
+            "Village / Location"
+        )
+
+        equipment = st.selectbox(
+            "Equipment Type",
+            [
+                "Tractor",
+                "Harvester",
+                "Rotavator",
+                "Seeder",
+                "Cultivator",
+                "Sprayer"
+            ]
+        )
+        rent = st.number_input(
+            "Rent Per Day (₹)"
+        )
+
+        contact = st.text_input(
+            "Contact Number"
+        )
+
+        if st.button("Add Equipment"):
+            c.execute(
+                """
+                INSERT INTO equipment
+                (
+                owner_name,
+                location,
+                equipment_type,
+                rent_per_day,
+                contact
+                )
+                VALUES
+                (?, ?, ?, ?, ?)
+                """,
+                (
+                    owner,
+                    location,
+                    equipment,
+                    rent,
+                    contact
+                )
+            )
+
+            conn.commit()
+            st.success(
+                "Equipment Listed Successfully"
+            )
+            elif menu == "Search Equipment":
+                equipment = st.selectbox(
+            "Equipment",
+            [
+                "Tractor",
+                "Harvester",
+                "Rotavator",
+                "Seeder",
+                "Cultivator",
+                "Sprayer"
+            ]
+        )
+        if st.button("Search"):
+            df = pd.read_sql_query(
+                """
+                SELECT *
+                FROM equipment
+                WHERE equipment_type=?
+                """,
+                conn,
+                params=(equipment,)
+            )
+
+            if len(df) > 0:
+
+                st.dataframe(df)
+
+            else:
+
+                st.warning(
+                    "No Equipment Available"
+                )
+         elif menu == "Equipment Recommendation":
+              crop = st.selectbox(
+            "Crop",
+            [
+                "Wheat",
+                "Rice",
+                "Maize",
+                "Cotton"
+            ]
+        )
+             farm_size = st.number_input(
+            "Farm Size (Acres)",
+            min_value=1
+        )
+
+        if st.button("Recommend"):
+            if farm_size <= 2:
+
+                rec = "Power Tiller"
+
+            elif farm_size <= 5:
+
+                rec = "Tractor + Seeder"
+
+            else:
+
+                rec = (
+                    "Tractor + Rotavator "
+                    "+ Harvester"
+                )
+            st.markdown(f"""
+            <div class="success-card">
+            Recommended Equipment<br><br>
+            {rec}
+            </div>
+            """,
+            unsafe_allow_html=True
+            )
 
 elif page == "ℹ️ About":
 
