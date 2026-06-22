@@ -424,6 +424,15 @@ li[role="option"]:hover {
         font-size: 14px !important;
         text-align: center;
     }
+     [data-testid="stSidebar"]{
+    width:260px !important;
+    min-width:260px !important;
+    }
+
+    section[data-testid="stSidebar"]{
+    width:260px !important;
+    min-width:260px !important;
+    }
 
     /* Navigation options */
     div[role="radiogroup"] label {
