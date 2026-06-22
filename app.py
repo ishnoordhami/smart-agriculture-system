@@ -397,9 +397,8 @@ li[role="option"]:hover {
 }
 .sidebar-logo{
     color:white !important;
-    font-size:32px;
+    font-size:22px;
     font-weight:800;
-    text-align:center;
     margin-bottom:20px;
 }
 </style>
