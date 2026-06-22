@@ -347,7 +347,7 @@ if page == "🏠 Home":
     st.write("")
     st.write("")
 
-        col5, col6 = st.columns(2)
+    col5, col6 = st.columns(2)
 
     with col5:
         st.markdown("""
@@ -377,19 +377,12 @@ if page == "🏠 Home":
     ">
 
     ✅ Smart Crop Recommendation<br><br>
-
     ✅ Crop Yield Prediction<br><br>
-
     ✅ Crop Price Prediction<br><br>
-
     ✅ Plant Health Prediction<br><br>
-
     ✅ Equipment Sharing & Rental<br><br>
-
     ✅ Post-Harvest Storage Advisor<br><br>
-
     ✅ Mobile Friendly Interface<br><br>
-
     ✅ AI Powered Agricultural Insights
 
     </div>
