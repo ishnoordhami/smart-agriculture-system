@@ -716,6 +716,8 @@ if page == "🏠 Home":
     st.write("")
     
 elif page == "🌱 Crop Recommendation":
+    crop_rec_model = load_crop_rec_model()   # <-- ADD THIS
+    crop_encoder = load_crop_encoder()
     st.title("🌱 Crop Recommendation")
     st.write("Enter soil and climate information.")
     col1, col2 = st.columns(2)
@@ -740,6 +742,7 @@ elif page == "🌱 Crop Recommendation":
       """, unsafe_allow_html=True)
 
 elif page == "🌾 Crop Yield Prediction":
+    crop_yield_model = load_crop_yield_model() 
     st.title("🌾 Crop Yield Prediction")
     crop = st.selectbox( "Crop", ['Arecanut','Arhar/Tur','Bajra','Banana','Barley','Black pepper',
                                   'Cardamom','Cashewnut','Castor seed','Coconut ','Coriander',
@@ -787,6 +790,8 @@ elif page == "🌾 Crop Yield Prediction":
       """, unsafe_allow_html=True)
         
 elif page == "💰 Crop Price Prediction":
+    crop_price_model = load_crop_price_model()   # <-- ADD THIS
+    price_encoders = load_price_encoders()
     st.title("💰 Crop Price Prediction")
     state = st.selectbox( "State", list(price_encoders["STATE"].classes_) )
     district = st.selectbox( "District", list(price_encoders["District Name"].classes_) )
@@ -821,6 +826,8 @@ elif page == "💰 Crop Price Prediction":
       """, unsafe_allow_html=True)
 
 elif page == "🩺 Crop Health Prediction":
+    disease_model = load_disease_model()         # <-- ADD THIS
+    disease_encoder = load_disease_encoder()
     st.title("🩺 Crop Health Prediction")
     col1, col2 = st.columns(2)
     with col1:
@@ -882,6 +889,8 @@ elif page == "🩺 Crop Health Prediction":
       """, unsafe_allow_html=True)
 
 elif page == "📦 Post-Harvest Storage":
+    storage_classifier = load_storage_classifier()   # <-- ADD THIS
+    storage_regressor = load_storage_regressor() 
     st.title("📦 Post-Harvest Storage Advisor")
     st.write("Predict spoilage risk and shelf life based on storage conditions.")
     
