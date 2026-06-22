@@ -399,7 +399,7 @@ li[role="option"]:hover {
 """, unsafe_allow_html=True)
 
 st.sidebar.markdown(
-    "<h2 style='color:white;'>🌾 AgriVision</h2>",
+    "<h2 style='color:white !important;'>🌾 AgriVision</h2>",
     unsafe_allow_html=True
 )
 
