@@ -589,7 +589,11 @@ if about_btn:
     st.session_state.page = "ℹ️ About"
     st.rerun()
 
-if model != "Select Feature":
+if "last_model_selection" not in st.session_state:
+    st.session_state.last_model_selection = "Select Feature"
+
+if model != "Select Feature" and model != st.session_state.last_model_selection:
+    st.session_state.last_model_selection = model
     st.session_state.page = model
     st.rerun()
 
