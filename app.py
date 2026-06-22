@@ -521,14 +521,6 @@ margin-bottom:20px;
 box-shadow:0 4px 12px rgba(0,0,0,0.08);
 border:1px solid #e0e0e0;
 ">
-<h1 style="
-color:#1B5E20;
-text-align:center;
-margin:0;
-font-weight:800;
-">
-🌾 AgriVision
-</h1>
 </div>
 """, unsafe_allow_html=True)
 
