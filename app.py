@@ -524,6 +524,7 @@ elif page == "🩺 Plant Health Prediction":
       """, unsafe_allow_html=True)
 
 elif page == "🚜 Equipment Sharing":
+
     st.title("🚜 Equipment Sharing & Rental")
 
     menu = st.radio(
@@ -534,13 +535,12 @@ elif page == "🚜 Equipment Sharing":
             "Equipment Recommendation"
         ]
     )
+
+    # LIST EQUIPMENT
     if menu == "List Equipment":
 
         owner = st.text_input("Owner Name")
-
-        location = st.text_input(
-            "Village / Location"
-        )
+        location = st.text_input("Village / Location")
 
         equipment = st.selectbox(
             "Equipment Type",
@@ -553,15 +553,12 @@ elif page == "🚜 Equipment Sharing":
                 "Sprayer"
             ]
         )
-        rent = st.number_input(
-            "Rent Per Day (₹)"
-        )
 
-        contact = st.text_input(
-            "Contact Number"
-        )
+        rent = st.number_input("Rent Per Day (₹)")
+        contact = st.text_input("Contact Number")
 
         if st.button("Add Equipment"):
+
             c.execute(
                 """
                 INSERT INTO equipment
@@ -572,8 +569,7 @@ elif page == "🚜 Equipment Sharing":
                 rent_per_day,
                 contact
                 )
-                VALUES
-                (?, ?, ?, ?, ?)
+                VALUES (?, ?, ?, ?, ?)
                 """,
                 (
                     owner,
@@ -585,11 +581,12 @@ elif page == "🚜 Equipment Sharing":
             )
 
             conn.commit()
-            st.success(
-                "Equipment Listed Successfully"
-            )
-            elif menu == "Search Equipment":
-                equipment = st.selectbox(
+            st.success("Equipment Listed Successfully")
+
+    # SEARCH EQUIPMENT
+    elif menu == "Search Equipment":
+
+        equipment = st.selectbox(
             "Equipment",
             [
                 "Tractor",
@@ -600,28 +597,28 @@ elif page == "🚜 Equipment Sharing":
                 "Sprayer"
             ]
         )
+
         if st.button("Search"):
+
             df = pd.read_sql_query(
                 """
                 SELECT *
                 FROM equipment
-                WHERE equipment_type=?
+                WHERE equipment_type = ?
                 """,
                 conn,
                 params=(equipment,)
             )
 
             if len(df) > 0:
-
                 st.dataframe(df)
-
             else:
+                st.warning("No Equipment Available")
 
-                st.warning(
-                    "No Equipment Available"
-                )
-         elif menu == "Equipment Recommendation":
-              crop = st.selectbox(
+    # RECOMMENDATION
+    elif menu == "Equipment Recommendation":
+
+        crop = st.selectbox(
             "Crop",
             [
                 "Wheat",
@@ -630,34 +627,27 @@ elif page == "🚜 Equipment Sharing":
                 "Cotton"
             ]
         )
-             farm_size = st.number_input(
+
+        farm_size = st.number_input(
             "Farm Size (Acres)",
             min_value=1
         )
 
         if st.button("Recommend"):
+
             if farm_size <= 2:
-
                 rec = "Power Tiller"
-
             elif farm_size <= 5:
-
                 rec = "Tractor + Seeder"
-
             else:
+                rec = "Tractor + Rotavator + Harvester"
 
-                rec = (
-                    "Tractor + Rotavator "
-                    "+ Harvester"
-                )
             st.markdown(f"""
             <div class="success-card">
             Recommended Equipment<br><br>
             {rec}
             </div>
-            """,
-            unsafe_allow_html=True
-            )
+            """, unsafe_allow_html=True)
 
 elif page == "ℹ️ About":
 
