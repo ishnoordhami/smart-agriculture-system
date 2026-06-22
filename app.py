@@ -86,6 +86,32 @@ conn.commit()
 st.markdown("""
 <style>
 
+/* Remove Streamlit top spacing */
+.block-container{
+    padding-top: 0.5rem !important;
+}
+
+/* Hide Streamlit header completely */
+header[data-testid="stHeader"]{
+    display:none !important;
+}
+
+/* Remove empty top toolbar space */
+[data-testid="stToolbar"]{
+    display:none !important;
+}
+
+/* Remove top blank container */
+div[data-testid="stDecoration"]{
+    display:none !important;
+}
+
+/* Remove extra top padding */
+.main .block-container{
+    padding-top: 0rem !important;
+    margin-top: -20px !important;
+}
+
 /* Hide Streamlit Branding */
 #MainMenu {visibility:hidden;}
 footer {visibility:hidden;}
