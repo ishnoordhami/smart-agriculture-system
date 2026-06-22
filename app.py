@@ -687,7 +687,7 @@ elif page == "🩺 Plant Health Prediction":
       </div>
       """, unsafe_allow_html=True)
 
-elif page == "🚜 Equipment Sharing":
+elif page == "🚜 Equipment Sharing & Rental":
 
     st.title("🚜 Equipment Sharing & Rental")
 
