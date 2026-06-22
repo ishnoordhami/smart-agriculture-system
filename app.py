@@ -4,6 +4,7 @@ import numpy as np
 import pickle
 from datetime import datetime
 import sqlite3
+st.sidebar.write("Sidebar Test")
 
 st.set_page_config(
     page_title="AgriVision",
