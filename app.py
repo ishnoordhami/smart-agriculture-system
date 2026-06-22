@@ -347,59 +347,56 @@ if page == "🏠 Home":
     st.write("")
     st.write("")
 
-    col5, col6 = st.columns(2)
+        col5, col6 = st.columns(2)
 
-with col5:
+    with col5:
+        st.markdown("""
+        <div class='metric-card'>
+        <h2>🚜 Equipment Sharing</h2>
+        <h3>Rent Farm Machinery</h3>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col6:
+        st.markdown("""
+        <div class='metric-card'>
+        <h2>📦 Post-Harvest Storage Advisor</h2>
+        <h3>Shelf Life & Spoilage Risk</h3>
+        </div>
+        """, unsafe_allow_html=True)
+
     st.markdown("""
-    <div class='metric-card'>
-    <h2>🚜 Equipment Sharing</h2>
-    <h3>Rent Farm Machinery</h3>
+    <h2 style="color:#1B5E20;">🚀 Features</h2>
+
+    <div style="
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.1);
+    color:black;
+    ">
+
+    ✅ Smart Crop Recommendation<br><br>
+
+    ✅ Crop Yield Prediction<br><br>
+
+    ✅ Crop Price Prediction<br><br>
+
+    ✅ Plant Health Prediction<br><br>
+
+    ✅ Equipment Sharing & Rental<br><br>
+
+    ✅ Post-Harvest Storage Advisor<br><br>
+
+    ✅ Mobile Friendly Interface<br><br>
+
+    ✅ AI Powered Agricultural Insights
+
     </div>
     """, unsafe_allow_html=True)
-
-with col6:
-    st.markdown("""
-    <div class='metric-card'>
-    <h2>📦 Post-Harvest Storage Advisor</h2>
-    <h3>Shelf Life & Spoilage Risk</h3>
-    </div>
-    """, unsafe_allow_html=True)
-
-    st.subheader("🚀 Features")
-    st.markdown("""
-<h2 style="color:#1B5E20;">🚀 Features</h2>
-
-<div style="
-background:white;
-padding:20px;
-border-radius:15px;
-box-shadow:0 4px 12px rgba(0,0,0,0.1);
-color:black;
-">
-
-✅ Smart Crop Recommendation<br><br>
-
-✅ Crop Yield Prediction<br><br>
-
-✅ Crop Price Prediction<br><br>
-
-✅ Plant Health Prediction<br><br>
-
-✅ Equipment Sharing & Rental<br><br>
-
-✅ Post-Harvest Storage Advisor<br><br>
-
-✅ Mobile Friendly Interface<br><br>
-
-✅ AI Powered Agricultural Insights
-
-</div>
-""", unsafe_allow_html=True)
 
     st.write("")
-    st.info(
-        "💡 Tip: Use the navigation panel on the left to access each AI module."
-    )
+    
 elif page == "🌱 Crop Recommendation":
     st.title("🌱 Crop Recommendation")
     st.write("Enter soil and climate information.")
