@@ -135,6 +135,15 @@ header {visibility:hidden;}
     box-shadow:0 10px 30px rgba(0,0,0,0.25);
     margin-bottom:20px;
 }
+.hero-card h1,
+.hero-card h2,
+.hero-card h3,
+.hero-card p {
+    color: white !important;
+}
+.hero-card *{
+    color:white !important;
+}
 /* Glass Cards */
 .metric-card{
     background:white;
@@ -350,13 +359,7 @@ button[kind="secondary"] {
 [data-testid="stSidebar"] p {
     color: white !important;
 }
-/* Hero Card Text */
-.hero-card h1,
-.hero-card h2,
-.hero-card h3,
-.hero-card p {
-    color: white !important;
-}
+
 </style>
 """, unsafe_allow_html=True)
 
