@@ -401,6 +401,83 @@ li[role="option"]:hover {
     font-weight:800;
     margin-bottom:20px;
 }
+/* =========================
+   MOBILE RESPONSIVE FIXES
+   ========================= */
+
+@media (max-width: 768px) {
+
+    /* Sidebar width */
+    [data-testid="stSidebar"] {
+        min-width: 260px !important;
+        max-width: 260px !important;
+    }
+
+    /* Sidebar title */
+    .sidebar-logo {
+        font-size: 28px !important;
+        text-align: center;
+    }
+
+    /* Sidebar subtitle */
+    [data-testid="stSidebar"] p {
+        font-size: 14px !important;
+        text-align: center;
+    }
+
+    /* Navigation options */
+    div[role="radiogroup"] label {
+        width: 100% !important;
+        padding: 8px !important;
+        margin-bottom: 8px !important;
+        border-radius: 12px !important;
+        font-size: 15px !important;
+    }
+
+    /* Hero card */
+    .hero-card {
+        padding: 20px !important;
+        border-radius: 18px !important;
+    }
+
+    .hero-card h1 {
+        font-size: 32px !important;
+    }
+
+    .hero-card h3 {
+        font-size: 18px !important;
+    }
+
+    .hero-card p {
+        font-size: 14px !important;
+    }
+
+    /* Feature cards */
+    .metric-card {
+        padding: 15px !important;
+    }
+
+    .metric-card h2 {
+        font-size: 18px !important;
+    }
+
+    .metric-card h3 {
+        font-size: 14px !important;
+    }
+
+    /* Buttons */
+    .stButton > button {
+        font-size: 15px !important;
+        height: 50px !important;
+    }
+
+    /* Inputs */
+    .stNumberInput,
+    .stSelectbox,
+    .stTextInput {
+        width: 100% !important;
+    }
+}
 </style>
 """, unsafe_allow_html=True)
 
