@@ -438,9 +438,7 @@ if page == "🏠 Home":
     <h1>🌾 AgriVision</h1>
     <h3>Smart Agriculture Analytics Platform</h3>
     <p>
-    Predict crops, estimate yields,
-    forecast market prices and monitor
-    plant health using Machine Learning.
+    Transforming agriculture through intelligent predictions, resource sharing, and smart storage management.
     </p>
     </div>
     """, unsafe_allow_html=True) 
