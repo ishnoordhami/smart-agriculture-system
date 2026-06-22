@@ -842,7 +842,7 @@ elif page == "🩺 Crop Health Prediction":
       result = disease_encoder.inverse_transform(prediction)
       st.markdown(f"""
       <div class="success-card">
-      <h2>Plant Health Status</h2>
+      <h2>Crop Health Status</h2>
       <h1>{result[0]}</h1>
       </div>
       """, unsafe_allow_html=True)
