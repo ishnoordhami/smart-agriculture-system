@@ -7,12 +7,12 @@ import sqlite3
 st.sidebar.write("Sidebar Test")
 
 st.set_page_config(
-    st.sidebar.title("TEST SIDEBAR")
     page_title="AgriVision",
     page_icon="🌾",
     layout="wide",
     initial_sidebar_state="expanded"
 )
+st.sidebar.title("TEST SIDEBAR")
 
 @st.cache_resource
 def load_models():
