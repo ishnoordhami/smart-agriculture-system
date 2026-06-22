@@ -5,6 +5,25 @@ import pickle
 from datetime import datetime
 import sqlite3
 
+import os
+required_files = [
+    "crop_recommendation_model.pkl",
+    "label_encoder.pkl",
+    "crop_yield_model.pkl",
+    "crop_price_model.pkl",
+    "label_encoder_price.pkl",
+    "crop_disease_model.pkl",
+    "label_encoder_disease.pkl",
+    "spoilage_risk_model.pkl",
+    "shelf_life_model.pkl"
+]
+missing = [f for f in required_files if not os.path.exists(f)]
+if missing:
+    st.error(f"Missing files: {missing}")
+    st.stop()
+else:
+    st.success("All model files found!")
+
 st.set_page_config(
     page_title="AgriVision",
     page_icon="🌾",
