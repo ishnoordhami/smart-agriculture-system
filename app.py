@@ -315,11 +315,46 @@ div {
     border-radius: 10px !important;
 }
 
-/* Selectboxes */
+/* Select box */
 .stSelectbox div[data-baseweb="select"] {
-    background-color: white !important;
+    background: white !important;
     color: black !important;
     border-radius: 10px !important;
+    border: 1px solid #d0d0d0 !important;
+}
+
+/* Selected value */
+.stSelectbox div[data-baseweb="select"] span {
+    color: black !important;
+}
+
+/* Dropdown arrow */
+.stSelectbox svg {
+    fill: black !important;
+}
+
+/* Dropdown menu */
+div[role="listbox"] {
+    background: white !important;
+    color: black !important;
+}
+
+/* Each option */
+div[role="option"] {
+    background: white !important;
+    color: black !important;
+}
+
+/* Hover effect */
+div[role="option"]:hover {
+    background: #E8F5E9 !important;
+    color: black !important;
+}
+
+/* Selected option */
+div[aria-selected="true"] {
+    background: #C8E6C9 !important;
+    color: black !important;
 }
 
 /* Dropdown text */
