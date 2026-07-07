@@ -65,6 +65,20 @@ conn.commit()
 st.markdown("""
 <style>
 
+/* Force light theme for BaseWeb */
+[data-baseweb="popover"] {
+    background: white !important;
+}
+
+[data-baseweb="menu"] {
+    background: white !important;
+}
+
+[data-baseweb="menu"] * {
+    background: white !important;
+    color: black !important;
+}
+
 /* Remove Streamlit top spacing */
 .block-container{
     padding-top: 0.5rem !important;
