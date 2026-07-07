@@ -563,6 +563,41 @@ li[role="option"]:hover {
 .stSelectbox *{
     color:black !important;
 }
+
+/* Closed select box */
+.stSelectbox [data-baseweb="select"]{
+    background:#ffffff !important;
+    color:#000000 !important;
+    border:1px solid #cccccc !important;
+    border-radius:10px !important;
+}
+
+/* Value shown inside */
+.stSelectbox [data-baseweb="select"] div{
+    color:#000000 !important;
+}
+
+/* Input container */
+.stSelectbox input{
+    color:#000000 !important;
+    -webkit-text-fill-color:#000000 !important;
+}
+
+/* Placeholder */
+.stSelectbox input::placeholder{
+    color:#666666 !important;
+}
+
+/* Dropdown arrow */
+.stSelectbox svg{
+    fill:#000000 !important;
+}
+
+/* Remove dark background */
+.stSelectbox div[data-testid="stSelectbox"]{
+    background:transparent !important;
+}
+
 </style>
 """, unsafe_allow_html=True)
 
